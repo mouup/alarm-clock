@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm Clock</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">   
+
+</head>
+
+<body>
+    <div id="clock" class="digi-clock"></div>
+    <span class="clock-icon-container"><i class="bi bi-alarm-fill alarm-clock"></i></span>
+
+
+    <div id="alarm-clock-container" class="alarm-clock-container">
+        
+        <input type="time" step="1" name="alarmTime" id="alarm-time" class="alarm-time">
+        <div>
+            <button id="set-alarm-btn">Set Alarm</button>
+        </div>
+
+    </div>
+
+    <div id="list-of-alarms" class="list-container">
+        <h2>Alarms</h2>
+        <div id="alarms" class="alarms">
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
