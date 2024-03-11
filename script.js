@@ -27,7 +27,7 @@ function clockTime() {
 
     hh = twelveHourFormatting(hh);
 
-     // formatting time manually
+    // formatting time manually
     const digiClock = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')} ${ampm}`;
     clockEl.textContent = digiClock;
 
@@ -45,40 +45,43 @@ function clockTime() {
 function setAlarm() {
     document.querySelector('.clock-icon-container').classList.remove('animate__animated', 'animate__bounce', 'animate__repeat-3');
     const time = document.getElementById('alarm-time').value;
-    let [hrs, mins, secs] = time.split(':');
-    let timeOfTheDay;
+    if (time) {
+        let [hrs, mins, secs] = time.split(':');
+        let timeOfTheDay;
 
-    if (hrs >= 12) {
-        timeOfTheDay = 'PM';
-    } else {
-        timeOfTheDay = 'AM';
+        if (hrs >= 12) {
+            timeOfTheDay = 'PM';
+        } else {
+            timeOfTheDay = 'AM';
+        }
+
+        hrs = twelveHourFormatting(hrs);
+
+        const alarmTime = `${addZero(hrs)}:${mins}:${secs} ${timeOfTheDay}`;
+
+        // adding alarm to the list
+        const listItem = document.createElement('div');
+        listItem.classList.add('display-alarm');
+        listItem.innerHTML = `
+        <span id="time">${alarmTime}</span>
+        <i class="bi bi-x-square btn-color" onclick="deleteAlarm(this)"></i>`;
+        listOfAlarms.appendChild(listItem);
+
+        //timeout to check alarm time
+
+        setInterval(() => {
+
+            if (alarmTime === clockTime()) {
+                var alarmSound = new Audio('assets/alarm-sound.wav');
+                alarmSound.play();
+                // alert(`Alarm !! Alarm !! The time is ${alarmTime}`); 
+                document.querySelector('.clock-icon-container').classList.add('animate__animated', 'animate__bounce', 'animate__repeat-3');
+            }
+        }, 1000);
+
+        document.getElementById('alarm-time').value = '';
     }
 
-    hrs = twelveHourFormatting(hrs);
-
-    const alarmTime = `${addZero(hrs)}:${mins}:${secs} ${timeOfTheDay}`;
-
-    // adding alarm to the list
-    const listItem = document.createElement('div');
-    listItem.classList.add('display-alarm');
-    listItem.innerHTML = `
-    <span id="time">${alarmTime}</span>
-    <i class="bi bi-x-square btn-color" onclick="deleteAlarm(this)"></i>`;
-    listOfAlarms.appendChild(listItem);
-
-    //timeout to check alarm time
-
-    setInterval(() => {
-
-        if (alarmTime === clockTime()) {
-            var alarmSound = new Audio('assets/alarm-sound.wav');
-            alarmSound.play();
-            // alert(`Alarm !! Alarm !! The time is ${alarmTime}`); 
-            document.querySelector('.clock-icon-container').classList.add('animate__animated', 'animate__bounce', 'animate__repeat-3');
-        }
-    }, 1000);
-
-    document.getElementById('alarm-time').value = '';
 }
 
 // to delete alarm
