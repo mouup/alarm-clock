@@ -27,9 +27,11 @@ function clockTime() {
 
     hh = twelveHourFormatting(hh);
 
+     // formatting time manually
     const digiClock = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')} ${ampm}`;
     clockEl.textContent = digiClock;
 
+    // formatting time to desired format using toLocaleTimeString 
     return time.toLocaleTimeString('en-US', {
         hour12: true,
         hour: "2-digit",
@@ -46,7 +48,7 @@ function setAlarm() {
     let [hrs, mins, secs] = time.split(':');
     let timeOfTheDay;
 
-    if (hrs > 12) {
+    if (hrs >= 12) {
         timeOfTheDay = 'PM';
     } else {
         timeOfTheDay = 'AM';
@@ -56,6 +58,7 @@ function setAlarm() {
 
     const alarmTime = `${addZero(hrs)}:${mins}:${secs} ${timeOfTheDay}`;
 
+    // adding alarm to the list
     const listItem = document.createElement('div');
     listItem.classList.add('display-alarm');
     listItem.innerHTML = `
@@ -66,10 +69,11 @@ function setAlarm() {
     //timeout to check alarm time
 
     setInterval(() => {
-    
+
         if (alarmTime === clockTime()) {
-           
-            alert(`Alarm !! Alarm !! The time is ${alarmTime}`);
+            var alarmSound = new Audio('assets/alarm-sound.wav');
+            alarmSound.play();
+            // alert(`Alarm !! Alarm !! The time is ${alarmTime}`); 
             document.querySelector('.clock-icon-container').classList.add('animate__animated', 'animate__bounce', 'animate__repeat-3');
         }
     }, 1000);
